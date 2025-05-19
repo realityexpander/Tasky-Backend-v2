@@ -12,7 +12,7 @@ data class EventDTOResponse(
     val to: Long,
     val host: String,
     val remindAt: Long,
-    val photos: List<PhotoDto>,
+    val photos: List<PhotoDTO>,
     val attendees: List<Attendee>,
     val isUserEventCreator: Boolean
 )

@@ -1,7 +1,7 @@
 package com.realityexpander.data.models
 
 import com.amazonaws.services.s3.AmazonS3
-import com.realityexpander.routing.responses.PhotoDto
+import com.realityexpander.routing.responses.PhotoDTO
 import com.realityexpander.sdk.AWS_BUCKET_NAME
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
@@ -28,11 +28,11 @@ data class Event(
 ) {
     fun containsUser(userId: String) = attendeeIds.contains(userId) || host == userId
 
-    suspend fun getPhotos(s3: AmazonS3, ioDispatcher: CoroutineDispatcher): List<PhotoDto> {
+    suspend fun getPhotos(s3: AmazonS3, ioDispatcher: CoroutineDispatcher): List<PhotoDTO> {
         return withContext(ioDispatcher) {
             photoKeys.map { key ->
                 async {
-                    PhotoDto(
+                    PhotoDTO(
                         key = key,
                         url = s3.generatePresignedUrl(AWS_BUCKET_NAME, key, Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 6)).toExternalForm()
                     )
