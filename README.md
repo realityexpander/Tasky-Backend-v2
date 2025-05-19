@@ -9,8 +9,12 @@ Tasky is a reminder app that allows users to create, manage, and receive reminde
 - MongoDB for data storage
 - S3 for file storage (Images)
 - Tasky Android Application Source: https://github.com/realityexpander/Tasky
-- Demonstrates the use of Koin for dependency injection, Ktor for server-side development, and MongoDB for data storage.
 - All secret keys and credentials are stored in a separate configuration file for security purposes.
+- Demonstrates the use of Koin for dependency injection, Ktor for server-side development, and MongoDB for data storage.
+  - includes a sample API key generation and validation process, as well as a sample task management system with reminders and attendees.
+  - Server uses JWT and refresh tokens for authentication and authorization.
+  - All API endpoints are secured with JWT authentication.
+  - Ability to kill tokens for security purposes.
 
 ## Setup:
 - Clone this repository
