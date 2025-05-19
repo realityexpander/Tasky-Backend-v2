@@ -115,7 +115,7 @@ val appModule = module {
                     }
                 )
             )
-            .withEndpointConfiguration(
+            .withEndpointConfiguration( // IDriveE2 S3 requires configuring the endpoint
                 com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration(
                     environmentVariables.s3Endpoint,
                     environmentVariables.s3SigningRegion
