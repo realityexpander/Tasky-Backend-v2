@@ -2,7 +2,10 @@
   ### Ktor Server for [Tasky (Task Management) Android App](https://github.com/realityexpander/Tasky)
 
 ## Overview
-Tasky is a reminder app that allows users to create, manage, and receive reminders for tasks. The backend is built using Java and Spring Boot, with MongoDB as the database and S3 for file storage.
+Tasky is a reminder app that allows users to create, manage, and receive reminders for events. 
+The backend server is built using Ktor, a Kotlin framework for building asynchronous servers and clients in connected systems.
+The server is designed to handle user authentication, task management, and event reminders.
+
 - Kotlin 2.1.2
 - Ktor 3.1.3 server application
 - Koin 4.0.4 for dependency injection
