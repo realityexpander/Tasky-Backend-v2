@@ -6,6 +6,7 @@ Tasky is a reminder app that allows users to create, manage, and receive reminde
 The backend server is built using Ktor, a Kotlin framework for building asynchronous servers and clients in connected systems.
 The server is designed to handle user authentication, task management, and event reminders.
 
+### Built With
 - Kotlin 2.1.2
 - Ktor 3.1.3 server application
 - Koin 4.0.4 for dependency injection
