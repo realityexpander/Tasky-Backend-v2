@@ -38,7 +38,11 @@ val appModule = module {
         val mongoConnectionString = environmentVariables.mongoConnectionString
 
         MongoClient.create(
-            connectionString = "$mongoConnectionStringPrefix$mongoUser:$mongoPassword$mongoConnectionString/$dbName?retryWrites=true&w=majority"
+            connectionString = "$mongoConnectionStringPrefix" +
+                  "$mongoUser:" +
+						mongoPassword +
+                  "$mongoConnectionString/" +
+                  "$dbName?retryWrites=true&w=majority"
         )
     }
     single {
