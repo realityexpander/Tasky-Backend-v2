@@ -32,8 +32,8 @@ val appModule = module {
 
     single {
         val environmentVariables = get<EnvironmentProvider>()
-        val mongoPassword = environmentVariables.mongoPw
         val mongoUser = environmentVariables.mongoUser
+        val mongoPassword = environmentVariables.mongoPw
         val mongoConnectionStringPrefix = environmentVariables.mongoConnectionStringPrefix
         val mongoConnectionString = environmentVariables.mongoConnectionString
 
