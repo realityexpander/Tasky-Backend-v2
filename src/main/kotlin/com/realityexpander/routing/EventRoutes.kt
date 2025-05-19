@@ -41,6 +41,7 @@ fun Route.event() {
 	val dispatchers by inject<DispatcherProvider>()
 
 	authenticate("jwt") {
+		// Create event with photos
 		post("event") {
 			val multipart = try {
 				call.receiveMultipart()
@@ -200,6 +201,7 @@ fun Route.event() {
 			call.respond(HttpStatusCode.OK, eventDtoResponse)
 		}
 
+		// Get event by ID
 		get("event") {
 			val eventId = call.parameters["eventId"]
 			if (eventId == null) {
@@ -250,6 +252,7 @@ fun Route.event() {
 			call.respond(HttpStatusCode.OK, eventDtoResponse)
 		}
 
+		// Delete event
 		delete("event") {
 			val eventId = call.parameters["eventId"]
 			if (eventId == null) {
@@ -286,6 +289,7 @@ fun Route.event() {
 			call.respond(HttpStatusCode.OK)
 		}
 
+		// Update event
 		put("event") {
 			val multipart = try {
 				call.receiveMultipart()
@@ -482,6 +486,7 @@ fun Route.event() {
 			call.respond(HttpStatusCode.OK, eventDtoResponse)
 		}
 
+		// Check if user is an attendee of the event
 		get("attendee") {
 			val email = call.parameters["email"]
 			val eventId = call.parameters["eventId"]
@@ -532,6 +537,7 @@ fun Route.event() {
 			)
 		}
 
+		// Delete attendee from event
 		delete("attendee") {
 			val eventId = call.parameters["eventId"]
 			if (eventId == null) {

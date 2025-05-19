@@ -27,7 +27,7 @@ fun Application.configureRouting(
 		reminder()
 
 		cleanupRoutes()
-		status()
+		status() // Health check endpoint
 
 		get("/") {
 			call.respond(HttpStatusCode.OK)

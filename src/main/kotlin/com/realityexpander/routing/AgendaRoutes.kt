@@ -30,6 +30,7 @@ fun Route.agenda() {
     val dispatchers by inject<DispatcherProvider>()
 
     authenticate("jwt") {
+        // Gets the agenda for the given date
         get("agenda") {
             val time = call.parameters["time"]?.toLongOrNull()?.let {
                 try {
@@ -65,6 +66,7 @@ fun Route.agenda() {
         }
     }
     authenticate("jwt") {
+         // Syncs the agenda with the server by deleting the events, tasks, and reminders
         post("syncAgenda") {
             val request = call.receiveNullable<SyncAgendaRequest>() ?: kotlin.run {
                 call.respond(HttpStatusCode.BadRequest, ErrorMessage("Missing or invalid body"))
@@ -96,6 +98,7 @@ fun Route.agenda() {
     }
 
     authenticate("jwt") {
+         // Gets the full agenda for the given date
         get("fullAgenda") {
             val agenda = agendaDataSource.getFullAgenda(call.userId)
             call.respond(

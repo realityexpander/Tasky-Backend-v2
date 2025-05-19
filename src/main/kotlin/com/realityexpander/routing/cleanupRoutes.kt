@@ -15,6 +15,7 @@ fun Route.cleanupRoutes() {
 	val cleanupService: CleanupService by inject()
 
 	authenticate("basic") {
+		// Delete old entries before a certain date
 		post("cleanup") {
 			try {
 				val request = call.receiveNullable<CleanupRequest>()

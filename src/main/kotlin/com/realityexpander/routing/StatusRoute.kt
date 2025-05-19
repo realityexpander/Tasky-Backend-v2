@@ -6,7 +6,8 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 fun Route.status() {
-    get("/status") {
-        call.respond(HttpStatusCode.OK)
-    }
+	// Health check endpoint
+	get("/status") {
+		call.respond(HttpStatusCode.OK)
+	}
 }

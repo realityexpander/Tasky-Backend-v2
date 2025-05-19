@@ -167,6 +167,7 @@ fun Route.requestAccessToken(
     config: TokenConfig,
 ) {
     authenticate("apiKey") {
+        // Request new access token using refresh token
         post("accessToken") {
             val userDataSource: UserDataSource by inject()
             val tokenService: TokenService by inject()
@@ -212,7 +213,7 @@ fun Route.requestAccessToken(
             )
         }
 
-        // Save Kill access token to DB
+        // Save Killed access token to DB
         post("killToken") {
             val killedTokenDataSource: KilledTokenDataSource by inject()
             val body = call.receiveNullable<KillAccessTokenRequest>() ?: kotlin.run {
@@ -253,6 +254,7 @@ fun Route.createApiKey() {
     val apiKeyDataSource: ApiKeyDataSource by inject()
 
     authenticate("basic") { // Caller must use the `createApiKeyUser` from applicationSecrets.conf to create an API key
+        // Create API key
         post("apiKey") {
             val request = call.receiveNullable<CreateApiKeyRequest>() ?: kotlin.run {
                 call.respond(HttpStatusCode.BadRequest)
