@@ -117,8 +117,8 @@ val appModule = module {
             )
             .withEndpointConfiguration(
                 com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration(
-                    "w1d1.la5.idrivee2-10.com",  // don't include the bucket name here
-                    "us-la"
+                    environmentVariables.s3Endpoint,
+                    environmentVariables.s3Region
                 )
             )
             .build()
