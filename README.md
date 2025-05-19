@@ -15,6 +15,7 @@ Tasky is a reminder app that allows users to create, manage, and receive reminde
   - Server uses JWT and refresh tokens for authentication and authorization.
   - All API endpoints are secured with JWT authentication.
   - Ability to kill tokens for security purposes.
+  - Uses HOCON for configuration management.
 
 ## Setup:
 - Clone this repository
