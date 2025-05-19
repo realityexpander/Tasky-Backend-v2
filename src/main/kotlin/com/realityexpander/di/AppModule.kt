@@ -97,7 +97,7 @@ val appModule = module {
 //                    }
 //                )
 //            )
-//            .withRegion("eu-central-1")
+//            .withRegion(environmentVariables.s3SigningRegion)
 //            .build()
 
         // Using IDriveE2 S3 instance
