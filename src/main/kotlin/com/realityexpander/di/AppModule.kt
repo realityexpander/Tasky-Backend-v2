@@ -118,7 +118,7 @@ val appModule = module {
             .withEndpointConfiguration(
                 com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration(
                     environmentVariables.s3Endpoint,
-                    environmentVariables.s3Region
+                    environmentVariables.s3SigningRegion
                 )
             )
             .build()

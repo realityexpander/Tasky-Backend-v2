@@ -20,7 +20,7 @@ interface EnvironmentProvider {
 	val s3AccessKeyId: String
 	val s3SecretAccessKey: String
 	val s3Endpoint: String
-	val s3Region: String
+	val s3SigningRegion: String
 	val createApiKeyUser: String
 	val createApiKeyPassword: String
 }
@@ -35,7 +35,7 @@ const val JWT_AUDIENCE = "JWT_AUDIENCE"
 const val S3_ACCESS_KEY_ID = "S3_ACCESS_KEY_ID"
 const val S3_SECRET_ACCESS_KEY = "S3_SECRET_ACCESS_KEY"
 const val S3_ENDPOINT = "S3_ENDPOINT"
-const val S3_REGION = "S3_REGION"
+const val S3_SIGNING_REGION = "S3_SIGNING_REGION"
 const val CREATE_API_KEY_USER = "CREATE_API_KEY_USER"
 const val CREATE_API_KEY_PASSWORD = "CREATE_API_KEY_PASSWORD"
 
@@ -56,7 +56,7 @@ data class AuthenticationSecrets(
 	val s3AccessKeyId: String = "",
 	val s3SecretAccessKey: String = "",
 	val s3Endpoint: String = "",
-	val s3Region: String = "",
+	val s3SigningRegion: String = "",
 	val createApiKeyUser: String = "",
 	val createApiKeyPassword: String = ""
 )
@@ -87,7 +87,7 @@ object DevelopmentEnvironmentProvider : EnvironmentProvider {
 				System.getenv(S3_ACCESS_KEY_ID).isNullOrBlank() ||
 				System.getenv(S3_SECRET_ACCESS_KEY).isNullOrBlank() ||
 				System.getenv(S3_ENDPOINT).isNullOrBlank() ||
-				System.getenv(S3_REGION).isNullOrBlank() ||
+				System.getenv(S3_SIGNING_REGION).isNullOrBlank() ||
 				System.getenv(CREATE_API_KEY_USER).isNullOrBlank() ||
 				System.getenv(CREATE_API_KEY_PASSWORD).isNullOrBlank()
 			) {
@@ -115,7 +115,7 @@ object DevelopmentEnvironmentProvider : EnvironmentProvider {
 			authenticationSecretsConfig.secrets.s3AccessKeyId.isBlank() ||
 			authenticationSecretsConfig.secrets.s3SecretAccessKey.isBlank() ||
 			authenticationSecretsConfig.secrets.s3Endpoint.isBlank() ||
-			authenticationSecretsConfig.secrets.s3Region.isBlank() ||
+			authenticationSecretsConfig.secrets.s3SigningRegion.isBlank() ||
 			authenticationSecretsConfig.secrets.createApiKeyUser.isBlank() ||
 			authenticationSecretsConfig.secrets.createApiKeyPassword.isBlank()
 		) {
@@ -136,7 +136,7 @@ object DevelopmentEnvironmentProvider : EnvironmentProvider {
 		System.setProperty(S3_ACCESS_KEY_ID, authenticationSecretsConfig.secrets.s3AccessKeyId)
 		System.setProperty(S3_SECRET_ACCESS_KEY, authenticationSecretsConfig.secrets.s3SecretAccessKey)
 		System.setProperty(S3_ENDPOINT, authenticationSecretsConfig.secrets.s3Endpoint)
-		System.setProperty(S3_REGION, authenticationSecretsConfig.secrets.s3Region)
+		System.setProperty(S3_SIGNING_REGION, authenticationSecretsConfig.secrets.s3SigningRegion)
 		System.setProperty(CREATE_API_KEY_USER, authenticationSecretsConfig.secrets.createApiKeyUser)
 		System.setProperty(CREATE_API_KEY_PASSWORD, authenticationSecretsConfig.secrets.createApiKeyPassword)
 	}
@@ -165,8 +165,8 @@ object DevelopmentEnvironmentProvider : EnvironmentProvider {
 		get() = getSystemEnvOrProperty(S3_SECRET_ACCESS_KEY)
 	override val s3Endpoint: String
 		get() = getSystemEnvOrProperty(S3_ENDPOINT)
-	override val s3Region: String
-		get() = getSystemEnvOrProperty(S3_REGION)
+	override val s3SigningRegion: String
+		get() = getSystemEnvOrProperty(S3_SIGNING_REGION)
 	override val createApiKeyUser: String
 		get() = getSystemEnvOrProperty(CREATE_API_KEY_USER)
 	override val createApiKeyPassword	: String

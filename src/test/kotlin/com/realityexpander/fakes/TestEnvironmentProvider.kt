@@ -21,6 +21,10 @@ data object TestEnvironmentProvider : EnvironmentProvider {
 		get() = "test-access-key-id"
 	override val s3SecretAccessKey: String
 		get() = "test-secret-access-key"
+	override val s3Endpoint: String
+		get() = "test-endpoint"
+	override val s3SigningRegion: String
+		get() = "test-region"
 	override val createApiKeyUser: String
 		get() = "test-user"
 	override val createApiKeyPassword: String
