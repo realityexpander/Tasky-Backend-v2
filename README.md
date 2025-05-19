@@ -1,4 +1,5 @@
-# Tasky - Reminder App Backend
+# Tasky Backend v2.0
+  ### Ktor Server for [Tasky Android Reminder App](https://github.com/realityexpander/Tasky)
 
 ## Overview
 Tasky is a reminder app that allows users to create, manage, and receive reminders for tasks. The backend is built using Java and Spring Boot, with MongoDB as the database and S3 for file storage.
@@ -7,6 +8,7 @@ Tasky is a reminder app that allows users to create, manage, and receive reminde
 - Koin 4.0.4 for dependency injection
 - MongoDB for data storage
 - S3 for file storage (Images)
+- Tasky Android Application Source: https://github.com/realityexpander/Tasky
 
 ## Setup:
 - Clone this repository
