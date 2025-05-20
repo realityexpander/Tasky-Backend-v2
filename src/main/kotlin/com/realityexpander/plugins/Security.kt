@@ -83,7 +83,7 @@ fun Application.configureSecurity(tokenConfig: TokenConfig) {
 				if (accessToken == null) errorReasons += "Token is missing, " else {
 					// Check if the token is killed or revoked
 					if (killedTokenDataSource.isKilled(accessToken))
-						errorReasons += "Token has been revoked, "
+						errorReasons += "Token has been killed, "
 				}
 				if (errorReasons.endsWith(", "))
 					errorReasons = errorReasons.dropLast(2) // trim trailing comma
