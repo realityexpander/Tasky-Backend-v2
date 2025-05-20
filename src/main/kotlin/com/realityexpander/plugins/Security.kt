@@ -81,6 +81,7 @@ fun Application.configureSecurity(tokenConfig: TokenConfig) {
 						errorReasons += "API key is invalid, "
 				}
 				if (accessToken == null) errorReasons += "Token is missing, " else {
+					// Check if the token is killed or revoked
 					if (killedTokenDataSource.isKilled(accessToken))
 						errorReasons += "Token has been revoked, "
 				}
