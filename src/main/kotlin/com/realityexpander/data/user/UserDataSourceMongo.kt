@@ -22,7 +22,6 @@ class UserDataSourceMongo(
     }
 
     override suspend fun getUserByEmail(email: String): User? {
-        val user = users.find(eq("email", email)).firstOrNull()
         return users.find(eq("email", email)).firstOrNull()
     }
 
