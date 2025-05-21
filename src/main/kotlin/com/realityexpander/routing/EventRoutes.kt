@@ -289,7 +289,7 @@ fun Route.event() {
 			call.respond(HttpStatusCode.OK)
 		}
 
-		// Update event
+		// Update event with photos
 		put("event") {
 			val multipart = try {
 				call.receiveMultipart()
