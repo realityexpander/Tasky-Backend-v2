@@ -5,6 +5,7 @@ import com.amazonaws.auth.AWSStaticCredentialsProvider
 import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.AmazonS3ClientBuilder
 import com.mongodb.kotlin.client.coroutine.MongoClient
+import com.mongodb.kotlin.client.coroutine.MongoDatabase
 import com.realityexpander.data.agenda.*
 import com.realityexpander.data.auth.ApiKeyDataSourceMongo
 import com.realityexpander.data.auth.KilledTokenDataSourceMongo
@@ -30,7 +31,7 @@ import org.koin.dsl.module
 val appModule = module {
     val dbName = "tasky"
 
-    single {
+    single<MongoClient> {
         val environmentVariables = get<EnvironmentProvider>()
         val mongoUser = environmentVariables.mongoUser
         val mongoPassword = environmentVariables.mongoPw
@@ -45,7 +46,7 @@ val appModule = module {
                   "$dbName?retryWrites=true&w=majority"
         )
     }
-    single {
+    single<MongoDatabase> {
         val client = get<MongoClient>()
         client.getDatabase(dbName)
     }
@@ -79,7 +80,7 @@ val appModule = module {
     single<TokenService> {
         JwtTokenService()
     }
-    single {
+    single<UserDataValidationService> {
         UserDataValidationService()
     }
     single<AmazonS3> {
@@ -130,6 +131,5 @@ val appModule = module {
     singleOf(::DatabaseCleanupService).bind<CleanupService>()
 
     single { DevelopmentEnvironmentProvider }.bind<EnvironmentProvider>()
-
     single { StandardDispatcherProvider }.bind<DispatcherProvider>()
 }

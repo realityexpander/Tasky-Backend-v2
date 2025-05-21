@@ -10,6 +10,7 @@ import com.realityexpander.domain.security.token.TokenConfig
 import com.realityexpander.domain.security.token.TokenService
 import com.realityexpander.domain.user.UserDataSource
 import com.realityexpander.domain.user.UserDataValidationService
+import com.realityexpander.domain.util.EnvironmentProvider
 import com.realityexpander.domain.util.ErrorMessage
 import com.realityexpander.domain.util.generateRandomString
 import com.realityexpander.inject
@@ -89,6 +90,7 @@ fun Route.register() {
 fun Route.login(tokenConfig: TokenConfig) {
     authenticate("apiKey") {
         post("login") {
+            val environmentVariables: EnvironmentProvider by inject()
             val request = call.receiveNullable<AuthRequest>() ?: kotlin.run {
                 call.respond(HttpStatusCode.BadRequest)
                 return@post
@@ -126,7 +128,7 @@ fun Route.login(tokenConfig: TokenConfig) {
                 return@post
             }
 
-            val config = if(request.email == "debug@debug.com") {
+            val config = if(request.email == environmentVariables.createApiKeyUser) {
                 tokenConfig.copy(
                     expiresIn = 10.seconds.inWholeMilliseconds
                 )
@@ -169,6 +171,7 @@ fun Route.requestAccessToken(
     authenticate("apiKey") {
         // Request new access token using refresh token
         post("accessToken") {
+            val environmentVariables: EnvironmentProvider by inject()
             val userDataSource: UserDataSource by inject()
             val tokenService: TokenService by inject()
             val body = call.receiveNullable<AccessTokenRequest>() ?: kotlin.run {
@@ -189,9 +192,9 @@ fun Route.requestAccessToken(
             }
 
             val email = userDataSource.getUserById(body.userId)?.email
-            val tokenConfig = if(email == "debug@debug.com") {
+            val tokenConfig = if(email == environmentVariables.createApiKeyUser) {
                 val debugTime = 10.seconds.inWholeMilliseconds
-                application.log.debug("Refresh from debug@debug.com, expiry in ${debugTime.seconds}")
+                application.log.debug("Refresh from debug ${environmentVariables.createApiKeyUser}, expiry in ${debugTime.seconds}")
                 config.copy(expiresIn = debugTime)
             } else
                 config

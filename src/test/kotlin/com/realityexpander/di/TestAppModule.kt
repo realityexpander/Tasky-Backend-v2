@@ -31,9 +31,7 @@ val testAppModule = module {
     singleOf(::AttendeeDataSourceFake).bind<AttendeeDataSource>()
     singleOf(::SHA256HashingService).bind<HashingService>()
     singleOf(::JwtTokenService).bind<TokenService>()
-    single {
-        UserDataValidationService()
-    }
+    singleOf(::UserDataValidationService).bind()
     single<AmazonS3> {
         mockk(relaxed = true) {
             every {
