@@ -7,8 +7,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.InputStream
 import java.util.*
+import kotlin.time.Duration.Companion.days
 
-//const val AWS_BUCKET_NAME = "tasky-photos"
 const val AWS_BUCKET_NAME = "tasky"
 
 suspend fun AmazonS3.putS3Object(bucketName: String, objectKey: String, inputStream: InputStream): PutObjectResult {
@@ -41,6 +41,8 @@ suspend fun AmazonS3.deleteBucketObjects(bucketName: String, keys: List<String>,
 
 suspend fun AmazonS3.getS3Url(key: String): String {
     return withContext(Dispatchers.IO) {
-        generatePresignedUrl(AWS_BUCKET_NAME, key, Date(1000L * 60 * 60 * 24 * 6)).toExternalForm()
+        generatePresignedUrl(AWS_BUCKET_NAME,
+            key,
+            Date(6.days.inWholeMilliseconds)).toExternalForm()
     }
 }

@@ -365,6 +365,51 @@ fun Route.event() {
 				return@put
 			}
 
+			suspend fun updateEventAsAttendee(
+				request: UpdateEventRequest,
+				userId: String,
+				eventFromDb: Event,
+				attendeeDataSource: AttendeeDataSource,
+				eventDataSource: EventDataSource,
+				s3: AmazonS3,
+				ioDispatcher: CoroutineDispatcher
+			): EventDTOResponse {
+				attendeeDataSource.updateAttendeeInfoForEvent(
+					eventId = eventFromDb._id,
+					attendeeId = userId,
+					isGoing = request.isGoing,
+					remindAt = request.remindAt
+				)
+				val event = eventFromDb.copy(
+					title = request.title,
+					description = request.description,
+					from = request.from,
+					to = request.to,
+					attendeeIds = request.attendeeIds,
+					_id = request.id,
+					photoKeys = eventFromDb.photoKeys,
+				)
+				eventDataSource.updateEventById(
+					eventId = eventFromDb._id,
+					event = event
+				)
+				val updatedEvent = eventDataSource.getEventById(eventFromDb._id)
+				val attendees = attendeeDataSource.getAttendeesForEvent(eventFromDb._id)
+
+				return EventDTOResponse(
+					title = updatedEvent!!.title,
+					description = updatedEvent.description,
+					from = updatedEvent.from,
+					to = updatedEvent.to,
+					host = updatedEvent.host,
+					remindAt = attendees.find { it.userId == userId }?.remindAt ?: 0,
+					photos = event.getPhotos(s3, ioDispatcher),
+					attendees = attendees,
+					id = updatedEvent._id,
+					isUserEventCreator = userId == updatedEvent.host
+				)
+			}
+
 			if (eventFromDb.containsUser(call.userId) && call.userId != eventFromDb.host) {
 				// Attendee updated isGoing or reminder type
 				val eventDto = updateEventAsAttendee(
@@ -577,49 +622,4 @@ fun Route.event() {
 			call.respond(HttpStatusCode.OK)
 		}
 	}
-}
-
-private suspend fun updateEventAsAttendee(
-	request: UpdateEventRequest,
-	userId: String,
-	eventFromDb: Event,
-	attendeeDataSource: AttendeeDataSource,
-	eventDataSource: EventDataSource,
-	s3: AmazonS3,
-	ioDispatcher: CoroutineDispatcher
-): EventDTOResponse {
-	attendeeDataSource.updateAttendeeInfoForEvent(
-		eventId = eventFromDb._id,
-		attendeeId = userId,
-		isGoing = request.isGoing,
-		remindAt = request.remindAt
-	)
-	val event = eventFromDb.copy(
-		title = request.title,
-		description = request.description,
-		from = request.from,
-		to = request.to,
-		attendeeIds = request.attendeeIds,
-		_id = request.id,
-		photoKeys = eventFromDb.photoKeys,
-	)
-	eventDataSource.updateEventById(
-		eventId = eventFromDb._id,
-		event = event
-	)
-	val updatedEvent = eventDataSource.getEventById(eventFromDb._id)
-	val attendees = attendeeDataSource.getAttendeesForEvent(eventFromDb._id)
-
-	return EventDTOResponse(
-		title = updatedEvent!!.title,
-		description = updatedEvent.description,
-		from = updatedEvent.from,
-		to = updatedEvent.to,
-		host = updatedEvent.host,
-		remindAt = attendees.find { it.userId == userId }?.remindAt ?: 0,
-		photos = event.getPhotos(s3, ioDispatcher),
-		attendees = attendees,
-		id = updatedEvent._id,
-		isUserEventCreator = userId == updatedEvent.host
-	)
 }

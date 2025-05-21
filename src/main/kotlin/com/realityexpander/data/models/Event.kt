@@ -11,6 +11,8 @@ import org.bson.codecs.pojo.annotations.BsonId
 import org.bson.types.ObjectId
 import java.time.Instant
 import java.util.*
+import kotlin.time.Clock
+import kotlin.time.Duration.Companion.days
 
 @Serializable
 @Suppress("PropertyName") // _id is a reserved property name in MongoDB
@@ -34,7 +36,11 @@ data class Event(
                 async {
                     PhotoDTO(
                         key = key,
-                        url = s3.generatePresignedUrl(AWS_BUCKET_NAME, key, Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 6)).toExternalForm()
+                        url = s3.generatePresignedUrl(
+                            AWS_BUCKET_NAME,
+                            key,
+                            Date(System.currentTimeMillis() + 6.days.inWholeMilliseconds),
+                        ).toExternalForm()
                     )
                 }
             }.map { it.await() }
