@@ -39,4 +39,5 @@ keys/
 deploy.sh
 
 /.kotlin/errors/errors-*
+/.kotlin/*
 /src/main/resources/authenticationSecrets.conf
