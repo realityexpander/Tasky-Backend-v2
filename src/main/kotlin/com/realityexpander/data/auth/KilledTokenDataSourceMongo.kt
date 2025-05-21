@@ -8,7 +8,8 @@ import kotlinx.coroutines.flow.firstOrNull
 
 class KilledTokenDataSourceMongo(db: MongoDatabase): KilledTokenDataSource {
 
-    private val killedTokens = db.getCollection("killedToken", KilledToken::class.java)
+    private val killedTokens =
+        db.getCollection("killedToken", KilledToken::class.java)
 
     override suspend fun insertKilledToken(token: String): Boolean {
         return killedTokens.insertOne(KilledToken(token)).wasAcknowledged()
