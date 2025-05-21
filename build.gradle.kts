@@ -31,7 +31,7 @@ buildscript {
 }
 
 group = "com.realityexpander"
-version = "0.0.6"
+version = "0.0.7"
 application {
     mainClass.set("io.ktor.server.netty.EngineMain")
 }
@@ -47,6 +47,9 @@ repositories {
         url = uri("https://maven.pkg.jetbrains.space/public/p/ktor/eap")
     }
 }
+
+// add resources to the JAR
+
 
 tasks.withType<KotlinCompile>().configureEach {
     compilerOptions {
