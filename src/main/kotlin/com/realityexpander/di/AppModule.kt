@@ -85,7 +85,7 @@ val appModule = module {
     single<AmazonS3> {
         val environmentVariables = get<EnvironmentProvider>()
 
-        // Using AWS S3 instance
+        // Using AWS S3 instance - Leave for reference
 //        AmazonS3ClientBuilder.standard()
 //            .withCredentials(
 //                AWSStaticCredentialsProvider(

@@ -1,4 +1,4 @@
-package com.realityexpander.fakes
+package com. realityexpander.fakes
 
 import com.realityexpander.data.models.KilledToken
 import com.realityexpander.domain.agenda.KilledTokenDataSource
