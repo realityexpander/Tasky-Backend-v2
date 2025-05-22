@@ -130,8 +130,8 @@ The server is designed to handle user authentication, task management, and event
   - MongoDB Atlas (realityexpanderdev@gmail.com)
     - https://cloud.mongodb.com/v2/6822725603bd487e26487991#/metrics/replicaSet/682272b8fb8c845215074f78/explorer/tasky/reminder/find
       - Database: `Tasky-1 @ AWS Oregon (us-west-2)`
-      - 
 
+### Version History
 - Version 0.0.7 - Uses Configuration Files
 - Version 0.0.8 - Fixes Image Uploading, support multiple S3 services
 
