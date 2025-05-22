@@ -113,8 +113,8 @@ The server is designed to handle user authentication, task management, and event
         - https://www.idrive.com/s3-storage-e2/developer-guide
   ### Local S3 Bucket - Minio
   - Installation: https://min.io/open-source/download
+    - Startup (CLI): `minio server /Volumes/TRS-83/data`
     - Dashboard: http://127.0.0.1:63009/browser
-    - Startup: `minio server /Volumes/TRS-83/data`
     - CLI to configure:
 
     ```
