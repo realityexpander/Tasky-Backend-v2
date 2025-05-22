@@ -41,7 +41,7 @@ suspend fun Agenda.toAgendaDto(
 							remindAt = attendees.await().find {
 									it.userId == callerUserId
 								}?.remindAt ?: 0,
-							id = event._id.toString(),
+							id = event._id,
 							photos = event.getPhotos(s3, ioDispatcher),
 							attendees = attendees.await(),
 							isUserEventCreator = callerUserId == event.host
@@ -53,7 +53,7 @@ suspend fun Agenda.toAgendaDto(
 					description = it.description,
 					time = it.time,
 					remindAt = it.remindAt,
-					id = it._id.toString(),
+					id = it._id,
 					isDone = it.isDone
 				)
 			},
@@ -63,7 +63,7 @@ suspend fun Agenda.toAgendaDto(
 					description = it.description,
 					time = it.time,
 					remindAt = it.remindAt,
-					id = it._id.toString()
+					id = it._id
 				)
 			}
 		)
