@@ -11,6 +11,10 @@ import kotlin.time.Duration.Companion.seconds
 /**
  * HumanDate - Utility class for converting Instants and EpochMillis to human-readable localized-time-zone date/time strings.
  *
+ * * Add by right-clicking a variable, choose "View As"->"Create renderer" in debugger "Create Renderer"
+ *    - Use this string:
+ *  	  `new HumanDate(this).toTimeAgoStr();`
+ *
  * @author Chris Athanas (realityexpanderdev@gmail.com)
  * @since 0.12
  * @param dateTimeInstant The Instant to be converted.
