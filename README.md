@@ -103,19 +103,91 @@ The server is designed to handle user authentication, task management, and event
 
 
 ## My Environment Notes:
-  - Credentials Saved in LastPass as Note
+- Credentials Saved in LastPass as Note
 
-  - s3 Bucket Alternative - iDrive e2 - (realityexpanderdev@gmail.com)
-    - https://app.idrivee2.com/region/LA/buckets/tasky/object-storage?prefix=%2F
-    - Bucket: `tasky.w1d1.la5.idrivee2-10.com`
+  ### S3 Bucket Alternative - iDrive e2 - (realityexpanderdev@gmail.com)
+      - https://app.idrivee2.com/region/LA/buckets/tasky/object-storage?prefix=%2F
+      - Bucket: `tasky.w1d1.la5.idrivee2-10.com`
+    
+      - Developer Guide: 
+        - https://www.idrive.com/s3-storage-e2/developer-guide
+  ### Local S3 Bucket - Minio
+  - https://min.io/open-source/download
+  - Startup: minio server /Volumes/TRS-83/data
+    - Dashboard: http://127.0.0.1:63009/browser
+    - CLI:
 
-  - Developer Guide: 
-    - https://www.idrive.com/s3-storage-e2/developer-guide
-    `
-  - AWS CLI docs: 
-    - https://docs.aws.amazon.com/cli/v1/userguide/cli-configure-envvars.html
+    ```
+    aws configure set aws_access_key_id <access-key-id>
+    aws configure set aws_secret_access_key <secret-access-key>
+    aws s3api list-buckets --endpoint-url http://127.0.0.1:9000
+    aws s3api create-bucket --bucket tasky --endpoint-url http://127.0.0.1:9000      
+    ```
+### AWS CLI docs: 
+  - https://docs.aws.amazon.com/cli/v1/userguide/cli-configure-envvars.html
 
+### MongoDB Atlas
   - MongoDB Atlas (realityexpanderdev@gmail.com)
     - https://cloud.mongodb.com/v2/6822725603bd487e26487991#/metrics/replicaSet/682272b8fb8c845215074f78/explorer/tasky/reminder/find
       - Database: `Tasky-1 @ AWS Oregon (us-west-2)`
+      - 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
