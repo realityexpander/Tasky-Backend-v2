@@ -2,7 +2,7 @@ package com.realityexpander.data.models
 
 import com.amazonaws.services.s3.AmazonS3
 import com.realityexpander.routing.responses.PhotoDTO
-import com.realityexpander.sdk.AWS_BUCKET_NAME
+import com.realityexpander.sdk.generatePresignedUrlRequest
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
@@ -10,9 +10,6 @@ import kotlinx.serialization.Serializable
 import org.bson.codecs.pojo.annotations.BsonId
 import org.bson.types.ObjectId
 import java.time.Instant
-import java.util.*
-import kotlin.time.Clock
-import kotlin.time.Duration.Companion.days
 
 @Serializable
 @Suppress("PropertyName") // _id is a reserved property name in MongoDB
@@ -37,10 +34,8 @@ data class Event(
                     PhotoDTO(
                         key = key,
                         url = s3.generatePresignedUrl(
-                            AWS_BUCKET_NAME,
-                            key,
-                            Date(System.currentTimeMillis() + 6.days.inWholeMilliseconds),
-                        ).toExternalForm()
+                            s3.generatePresignedUrlRequest(key)
+                        ).toExternalForm(),
                     )
                 }
             }.map { it.await() }

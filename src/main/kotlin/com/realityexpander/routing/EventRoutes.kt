@@ -17,7 +17,7 @@ import com.realityexpander.routing.responses.EventDTOResponse
 import com.realityexpander.routing.util.MAX_FILE_SIZE
 import com.realityexpander.routing.util.PayloadTooLargeException
 import com.realityexpander.routing.util.save
-import com.realityexpander.sdk.AWS_BUCKET_NAME
+import com.realityexpander.sdk.S3_BUCKET_NAME
 import com.realityexpander.sdk.deleteBucketObjects
 import com.realityexpander.sdk.putS3Object
 import io.ktor.http.*
@@ -96,8 +96,8 @@ fun Route.event() {
 								savedFileJobs += coroutineScope {
 									launch(dispatchers.io) {
 										try {
-											streams[UUID.randomUUID().toString()] = part.save(dispatchers.io)
-
+											streams[UUID.randomUUID().toString()] =
+												part.save(dispatchers.io) // reads in the file from the request
 										} catch (e: PayloadTooLargeException) {
 											call.respond(
 												HttpStatusCode.PayloadTooLarge,
@@ -137,20 +137,36 @@ fun Route.event() {
 
 			savedFileJobs.joinAll()
 
+			// Attempt to save Photos to S3 instance
+			var errorState: String? = null
 			val jobs = streams.map { pair ->
 				coroutineScope {
 					launch(dispatchers.io) {
-						s3.putS3Object(
-							AWS_BUCKET_NAME,
-							pair.key,
-							pair.value // file
-						)
+						try {
+							if (!s3.doesBucketExistV2(S3_BUCKET_NAME)) {
+								s3.createBucket(S3_BUCKET_NAME)
+							}
+
+							s3.putS3Object(
+								S3_BUCKET_NAME,
+								pair.key,
+								pair.value // file input stream
+//								pair.value.inputStream() // file input stream
+							)
+						} catch (e: Exception) {
+							errorState = e.message
+						}
 					}
 				}
 			}
 			jobs.joinAll()
 
-			if (createEventRequest == null) {
+			errorState?.run {
+				call.respond(HttpStatusCode.BadRequest, ErrorMessage(errorState))
+				return@post
+			}
+
+			createEventRequest ?: run {
 				call.respond(HttpStatusCode.BadRequest, ErrorMessage("No event data attached"))
 				return@post
 			}
@@ -276,7 +292,7 @@ fun Route.event() {
 
 			coroutineScope {
 				launch(dispatchers.io) {
-					s3.deleteBucketObjects(AWS_BUCKET_NAME, event.photoKeys, dispatchers.io)
+					s3.deleteBucketObjects(S3_BUCKET_NAME, event.photoKeys, dispatchers.io)
 				}
 			}
 
@@ -442,7 +458,7 @@ fun Route.event() {
 			val deleteFilesJob =
 				coroutineScope {
 					launch(dispatchers.io) {
-						s3.deleteBucketObjects(AWS_BUCKET_NAME, deletedPhotoKeys, dispatchers.io)
+						s3.deleteBucketObjects(S3_BUCKET_NAME, deletedPhotoKeys, dispatchers.io)
 					}
 				}
 
@@ -455,7 +471,7 @@ fun Route.event() {
 			streams.map { pair ->
 				coroutineScope {
 					launch(dispatchers.io) {
-						s3.putS3Object(AWS_BUCKET_NAME, pair.key, pair.value)
+						s3.putS3Object(S3_BUCKET_NAME, pair.key, pair.value)
 					}
 				}
 			}.forEach { it.join() }

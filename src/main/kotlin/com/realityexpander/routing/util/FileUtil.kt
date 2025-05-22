@@ -2,6 +2,7 @@ package com.realityexpander.routing.util
 
 import io.ktor.http.content.*
 import io.ktor.utils.io.readBuffer
+import io.ktor.utils.io.streams.inputStream
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import kotlinx.io.readByteArray
@@ -26,17 +27,11 @@ class PayloadTooLargeException: Exception("The file exceeds the maximum allowed 
 
 suspend fun PartData.FileItem.save(ioDispatcher: CoroutineDispatcher): InputStream {
     return withContext(ioDispatcher) {
-        // check size
-        val fileSize = this@save.provider().readBuffer().size
-        if (fileSize > MAX_FILE_SIZE) {
+        val fileBuffer = this@save.provider().readBuffer() // Download the file
+        if (fileBuffer.size > MAX_FILE_SIZE) {
             throw PayloadTooLargeException()
         }
 
-        val byteArray = provider().readBuffer().readByteArray()
-        if(byteArray.size > MAX_FILE_SIZE) {
-            throw PayloadTooLargeException()
-        }
-
-        ByteArrayInputStream(byteArray)
+        fileBuffer.inputStream()
     }
 }
