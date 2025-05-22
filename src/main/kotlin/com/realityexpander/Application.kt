@@ -10,10 +10,12 @@ import org.koin.core.context.GlobalContext
 import org.koin.core.parameter.ParametersDefinition
 import org.koin.core.qualifier.Qualifier
 import org.koin.ktor.ext.inject
+import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.seconds
 
-fun main(args: Array<String>): Unit =
+fun main(args: Array<String>) {
     io.ktor.server.netty.EngineMain.main(args)
+}
 
 fun Application.module() {
     configureKoin()
@@ -23,7 +25,7 @@ fun Application.module() {
     val tokenConfig = TokenConfig(
         issuer = environmentVariables.jwtIssuer,
         audience = environmentVariables.jwtAudience,
-        expiresIn = 10.seconds.inWholeMilliseconds,
+        expiresIn = 2.hours.inWholeMilliseconds,
         secret = environmentVariables.jwtSecret
     )
 
