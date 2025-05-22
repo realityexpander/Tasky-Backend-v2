@@ -31,7 +31,7 @@ buildscript {
 }
 
 group = "com.realityexpander"
-version = "0.0.7"
+version = "0.0.8"
 application {
     mainClass.set("io.ktor.server.netty.EngineMain")
 }
