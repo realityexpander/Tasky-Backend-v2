@@ -190,6 +190,7 @@ fun Route.requestAccessToken(
                 return@post
             }
 
+            // Config JWT Token for regular or debug user
             val email = userDataSource.getUserById(body.userId)?.email
             val tokenConfig = if(email == environmentVariables.createApiKeyUser) {
                 val debugTime = 10.seconds.inWholeMilliseconds
