@@ -7,7 +7,6 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.hocon.Hocon
 import kotlinx.serialization.hocon.decodeFromConfig
 import java.io.File
-import java.lang.IllegalStateException
 
 interface EnvironmentProvider {
 	val mongoUser: String
@@ -71,7 +70,7 @@ object DevelopmentEnvironmentProvider : EnvironmentProvider {
 	// Access the config file from the resources folder
 	@OptIn(ExperimentalSerializationApi::class, InternalSerializationApi::class)
 	fun loadConfig() {
-		val configFile = File("src/main/resources/authenticationSecrets.conf")
+		val configFile = File("src/main/resources/authenticationSecrets.conf")  // from ShadowJar resources
 		if (!configFile.exists()) {
 			println("Config file not found: ${configFile.absolutePath}, attempting to use Environment Variables instead.")
 
@@ -99,6 +98,8 @@ object DevelopmentEnvironmentProvider : EnvironmentProvider {
 
 			return
 		}
+
+		println("Using configuration file: $configFile")
 
 		val config = ConfigFactory.parseFile(configFile)
 		val authenticationSecretsConfig = Hocon.decodeFromConfig<AuthenticationSecretsConfig>(config)

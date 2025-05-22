@@ -6,7 +6,7 @@ import com.mongodb.client.model.Filters.lt
 import com.mongodb.kotlin.client.coroutine.MongoDatabase
 import com.realityexpander.data.models.*
 import com.realityexpander.domain.cleanup.CleanupService
-import com.realityexpander.sdk.AWS_BUCKET_NAME
+import com.realityexpander.sdk.S3_BUCKET_NAME
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.toList
@@ -54,7 +54,7 @@ class DatabaseCleanupService(
             // Delete photos from S3
             eventsToDelete.forEach {
                 it.photoKeys.forEach { key ->
-                    s3.deleteObject(AWS_BUCKET_NAME, key)
+                    s3.deleteObject(S3_BUCKET_NAME, key)
                 }
             }
 
