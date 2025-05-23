@@ -29,8 +29,8 @@ fun Route.agenda() {
 	val s3: AmazonS3 by inject()
 	val dispatchers by inject<DispatcherProvider>()
 
+	// Gets the agenda for the given date
 	authenticate("jwt") {
-		// Gets the agenda for the given date
 		get("agenda") {
 			val time = call.parameters["time"]?.toLongOrNull()?.let {
 				try {
@@ -65,8 +65,9 @@ fun Route.agenda() {
 			call.respond(HttpStatusCode.OK, agendaDto)
 		}
 	}
+
+	// Syncs the agenda with the server by deleting the events, tasks, and reminders
 	authenticate("jwt") {
-		// Syncs the agenda with the server by deleting the events, tasks, and reminders
 		post("syncAgenda") {
 			val request = call.receiveNullable<SyncAgendaRequest>() ?: kotlin.run {
 				call.respond(HttpStatusCode.BadRequest,
@@ -114,8 +115,8 @@ fun Route.agenda() {
 		}
 	}
 
+	// Gets the full agenda for the given date
 	authenticate("jwt") {
-		// Gets the full agenda for the given date
 		get("fullAgenda") {
 			val agenda = agendaDataSource.getFullAgenda(call.userId)
 			call.respond(
