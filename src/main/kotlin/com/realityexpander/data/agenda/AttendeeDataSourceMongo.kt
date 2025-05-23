@@ -27,7 +27,9 @@ class AttendeeDataSourceMongo(
     }
 
     override suspend fun getAttendeesForEvent(eventId: String): List<Attendee> {
-        return attendees.find(eq("eventId", eventId)).toList()
+        return attendees.find(
+            eq("eventId", eventId)
+        ).toList()
     }
 
     override suspend fun createAttendeesForEvent(
