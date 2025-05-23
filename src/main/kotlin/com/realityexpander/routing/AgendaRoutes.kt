@@ -119,6 +119,7 @@ fun Route.agenda() {
 	authenticate("jwt") {
 		get("fullAgenda") {
 			val agenda = agendaDataSource.getFullAgenda(call.userId)
+
 			call.respond(
 				HttpStatusCode.OK,
 				agenda.toAgendaDto(
