@@ -108,12 +108,11 @@ The server is designed to handle user authentication, task management, and event
   ### S3 Bucket Alternative - iDrive e2 - (realityexpanderdev@gmail.com)
       - https://app.idrivee2.com/region/LA/buckets/tasky/object-storage?prefix=%2F
       - Bucket: `tasky.w1d1.la5.idrivee2-10.com`
-    
       - Developer Guide: 
         - https://www.idrive.com/s3-storage-e2/developer-guide
   ### Local S3 Bucket - Minio
   - Installation: https://min.io/open-source/download
-    - CLI to configure:
+  - Use AWS CLI to configure: https://aws.amazon.com/cli/
 
     ```
     aws configure set aws_access_key_id <access-key-id>
@@ -121,8 +120,8 @@ The server is designed to handle user authentication, task management, and event
     aws s3api list-buckets --endpoint-url http://127.0.0.1:9000
     aws s3api create-bucket --bucket tasky --endpoint-url http://127.0.0.1:9000      
     ```
-    - Startup (CLI): `minio server /Volumes/TRS-83/data`
-    - Dashboard: http://127.0.0.1:63009/browser
+  - Startup (CLI): `minio server /Volumes/TRS-83/data`
+  - Dashboard: http://127.0.0.1:63009/browser
 ### AWS CLI docs: 
   - https://docs.aws.amazon.com/cli/v1/userguide/cli-configure-envvars.html
 
