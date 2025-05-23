@@ -101,25 +101,21 @@ The server is designed to handle user authentication, task management, and event
       OpenJDK Runtime Environment (build 21.0.6+-13391695-b895.109)
       OpenJDK 64-Bit Server VM (build 21.0.6+-13391695-b895.109, mixed mode)
 
-
-## My Environment Notes:
-- Credentials Saved in LastPass as Note
-
-  ### S3 Bucket Alternative - iDrive e2 - (realityexpanderdev@gmail.com)
-      - https://app.idrivee2.com/region/LA/buckets/tasky/object-storage?prefix=%2F
-      - Bucket: `tasky.w1d1.la5.idrivee2-10.com`
-      - Developer Guide: 
-        - https://www.idrive.com/s3-storage-e2/developer-guide
-  ### Local S3 Bucket - Minio
+### S3 Bucket Free AWS-Compatible Alternative - iDrive e2 - (realityexpanderdev@gmail.com)
+  - https://app.idrivee2.com/region/LA/buckets/tasky/object-storage?prefix=%2F
+  - Bucket: `tasky.w1d1.la5.idrivee2-10.com`
+  - Developer Guide: 
+    - https://www.idrive.com/s3-storage-e2/developer-guide
+### Local S3 Bucket - Minio
   - Installation: https://min.io/open-source/download
   - Use AWS CLI to configure: https://aws.amazon.com/cli/
 
-    ```
-    aws configure set aws_access_key_id <access-key-id>
-    aws configure set aws_secret_access_key <secret-access-key>
-    aws s3api list-buckets --endpoint-url http://127.0.0.1:9000
-    aws s3api create-bucket --bucket tasky --endpoint-url http://127.0.0.1:9000      
-    ```
+  ```
+  aws configure set aws_access_key_id <access-key-id>
+  aws configure set aws_secret_access_key <secret-access-key>
+  aws s3api list-buckets --endpoint-url http://127.0.0.1:9000
+  aws s3api create-bucket --bucket tasky --endpoint-url http://127.0.0.1:9000      
+  ```
   - Startup (CLI): `minio server /Volumes/TRS-83/data`
   - Dashboard: http://127.0.0.1:63009/browser
 ### AWS CLI docs: 
@@ -129,6 +125,9 @@ The server is designed to handle user authentication, task management, and event
   - MongoDB Atlas (realityexpanderdev@gmail.com)
     - https://cloud.mongodb.com/v2/6822725603bd487e26487991#/metrics/replicaSet/682272b8fb8c845215074f78/explorer/tasky/reminder/find
       - Database: `Tasky-1 @ AWS Oregon (us-west-2)`
+
+## My Environment Notes
+- Credentials Saved in LastPass as Note
 
 ### Version History
 - Version 0.0.7 - Uses Configuration Files
