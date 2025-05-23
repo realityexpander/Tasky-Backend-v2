@@ -69,7 +69,8 @@ fun Route.agenda() {
 		// Syncs the agenda with the server by deleting the events, tasks, and reminders
 		post("syncAgenda") {
 			val request = call.receiveNullable<SyncAgendaRequest>() ?: kotlin.run {
-				call.respond(HttpStatusCode.BadRequest, ErrorMessage("Missing or invalid body"))
+				call.respond(HttpStatusCode.BadRequest,
+					ErrorMessage("Missing or invalid body"))
 				return@post
 			}
 
@@ -84,7 +85,8 @@ fun Route.agenda() {
 						if (eventDataSource.isHost(call.userId, id)) {
 							eventDataSource.deleteEvent(id)
 						} else {
-							call.respond(HttpStatusCode.Forbidden, ErrorMessage("You are not the host of this event"))
+							call.respond(HttpStatusCode.Forbidden,
+								ErrorMessage("You are not the host of this event"))
 							return@launch
 						}
 					}
@@ -99,7 +101,8 @@ fun Route.agenda() {
 			}
 			val reminderJob = coroutineScope {
 				launch {
-					request.deletedReminderIds.forEach { id -> reminderDataSource.deleteReminder(id, call.userId) }
+					request.deletedReminderIds.forEach { id ->
+						reminderDataSource.deleteReminder(id, call.userId) }
 				}
 			}
 
