@@ -134,6 +134,7 @@ The server is designed to handle user authentication, task management, and event
 ### Version History
 - Version 0.0.7 - Uses Configuration Files
 - Version 2.0.1 - Fixes Image Uploading, support multiple S3 services, harmonize version numbering
+- Version 2.0.2 - Fix database not saving remindAt time, improve visibility 
 
 
 
