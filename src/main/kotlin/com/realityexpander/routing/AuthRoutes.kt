@@ -256,7 +256,8 @@ fun Route.logout() {
 fun Route.createApiKey() {
     val apiKeyDataSource: ApiKeyDataSource by inject()
 
-    authenticate("basic") { // Caller must use the `createApiKeyUser` from applicationSecrets.conf to create an API key
+    // Caller must include the `createApiKeyUser` & pw using Basic Authentication from `applicationSecrets.conf` to create an API key
+    authenticate("basic") {
         // Create API key
         post("apiKey") {
             val request = call.receiveNullable<CreateApiKeyRequest>() ?: kotlin.run {
