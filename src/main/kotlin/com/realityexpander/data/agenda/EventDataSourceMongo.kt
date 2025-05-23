@@ -37,7 +37,8 @@ class EventDataSourceMongo(
     }
 
     override suspend fun isHost(userId: String, eventId: String): Boolean {
-        return events.find(eq("_id", eventId))
-            .firstOrNull()?.host == userId
+        return events.find(
+            eq("_id", eventId)
+        ).firstOrNull()?.host == userId
     }
 }

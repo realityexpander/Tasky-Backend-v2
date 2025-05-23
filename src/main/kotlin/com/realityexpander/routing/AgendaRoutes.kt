@@ -77,14 +77,17 @@ fun Route.agenda() {
 
 			val eventJob = coroutineScope {
 				launch {
-					request.deletedEventIds.forEach { id ->
-						eventDataSource.deleteEvent(id)
-					}
-
 					// Check if the user is the host of the event before deleting
-					request.deletedEventIds.forEach { id ->
-						if (eventDataSource.isHost(call.userId, id)) {
-							eventDataSource.deleteEvent(id)
+					val userId = call.userId
+					request.deletedEventIds.forEach { deletedEventId ->
+						// Check if the event exists
+						if(eventDataSource.getEventById(deletedEventId) == null) {
+							println("Event with id $deletedEventId not found")
+							return@forEach
+						}
+						// Check if the user is the host of the event
+						if (eventDataSource.isHost(userId, deletedEventId)) {
+							eventDataSource.deleteEvent(deletedEventId)
 						} else {
 							call.respond(HttpStatusCode.Forbidden,
 								ErrorMessage("You are not the host of this event"))
