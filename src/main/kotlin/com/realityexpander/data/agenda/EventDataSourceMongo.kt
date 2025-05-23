@@ -14,22 +14,30 @@ class EventDataSourceMongo(
         db.getCollection("event", Event::class.java)
 
     override suspend fun insertEvent(event: Event): Boolean {
-        return events.insertOne(event).wasAcknowledged()
+        return events.insertOne(event)
+            .wasAcknowledged()
     }
 
     override suspend fun deleteEvent(eventId: String): Boolean {
-        return events.deleteOne(eq("_id", eventId)).wasAcknowledged()
+        return events.deleteOne(
+            eq("_id", eventId)
+        ).wasAcknowledged()
     }
 
     override suspend fun getEventById(eventId: String): Event? {
-        return events.find(eq("_id", eventId)).firstOrNull()
+        return events.find(
+            eq("_id", eventId)
+        ).firstOrNull()
     }
 
     override suspend fun updateEventById(eventId: String, event: Event): Boolean {
-        return events.replaceOne(eq("_id", eventId), event).wasAcknowledged()
+        return events.replaceOne(
+            eq("_id", eventId), event
+        ).wasAcknowledged()
     }
 
     override suspend fun isHost(userId: String, eventId: String): Boolean {
-        return events.find(eq("_id", eventId)).firstOrNull()?.host == userId
+        return events.find(eq("_id", eventId))
+            .firstOrNull()?.host == userId
     }
 }

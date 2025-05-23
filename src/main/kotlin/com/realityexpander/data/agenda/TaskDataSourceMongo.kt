@@ -14,7 +14,8 @@ class TaskDataSourceMongo(
     private val tasks = db.getCollection("task", Task::class.java)
 
     override suspend fun insertTask(task: Task): Boolean {
-        return tasks.insertOne(task).wasAcknowledged()
+        return tasks.insertOne(task)
+            .wasAcknowledged()
     }
 
     override suspend fun deleteTask(taskId: String, ownerId: String): Boolean {
@@ -27,10 +28,14 @@ class TaskDataSourceMongo(
     }
 
     override suspend fun getTaskById(taskId: String): Task? {
-        return tasks.find(eq("_id", taskId)).firstOrNull()
+        return tasks.find(
+            eq("_id", taskId)
+        ).firstOrNull()
     }
 
     override suspend fun updateTaskById(taskId: String, task: Task): Boolean {
-        return tasks.replaceOne(eq("_id", taskId), task).wasAcknowledged()
+        return tasks.replaceOne(
+            eq("_id", taskId), task
+        ).wasAcknowledged()
     }
 }

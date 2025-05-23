@@ -14,7 +14,8 @@ class ReminderDataSourceMongo(
     private val reminders = db.getCollection("reminder", Reminder::class.java)
 
     override suspend fun insertReminder(reminder: Reminder): Boolean {
-        return reminders.insertOne(reminder).wasAcknowledged()
+        return reminders.insertOne(reminder)
+            .wasAcknowledged()
     }
 
     override suspend fun deleteReminder(reminderId: String, ownerId: String): Boolean {
@@ -25,7 +26,8 @@ class ReminderDataSourceMongo(
     }
 
     override suspend fun getReminderById(reminderId: String): Reminder? {
-        return reminders.find(eq("_id", reminderId)).firstOrNull()
+        return reminders.find(eq("_id", reminderId))
+            .firstOrNull()
     }
 
     override suspend fun updateReminderById(reminderId: String, reminder: Reminder): Boolean {
