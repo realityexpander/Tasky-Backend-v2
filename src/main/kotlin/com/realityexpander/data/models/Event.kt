@@ -18,6 +18,7 @@ data class Event(
     val description: String?,
     val from: Long,
     val to: Long,
+    val reminderAt: Long = 0L,
     val host: String,
     val photoKeys: List<String>,
     val attendeeIds: List<String>,

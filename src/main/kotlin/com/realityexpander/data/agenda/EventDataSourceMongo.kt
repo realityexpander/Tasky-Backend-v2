@@ -10,7 +10,8 @@ class EventDataSourceMongo(
     db: MongoDatabase
 ): EventDataSource {
 
-    private val events = db.getCollection("event", Event::class.java)
+    private val events =
+        db.getCollection("event", Event::class.java)
 
     override suspend fun insertEvent(event: Event): Boolean {
         return events.insertOne(event).wasAcknowledged()

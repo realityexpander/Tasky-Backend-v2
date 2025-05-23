@@ -177,6 +177,7 @@ fun Route.event() {
 				description = createEventRequest!!.description,
 				from = createEventRequest!!.from,
 				to = createEventRequest!!.to,
+				reminderAt = createEventRequest!!.remindAt,
 				photoKeys = streams.keys.toList(),
 				attendeeIds = createEventRequest!!.attendeeIds + call.userId,
 				host = call.userId

@@ -57,7 +57,12 @@ class AgendaDataSourceMongo(
                     )
                 ).toList()
             }
-            Agenda(events.await(), tasks.await(), reminders.await())
+
+            Agenda(
+                events.await(),
+                tasks.await(),
+                reminders.await()
+            )
         }
     }
 
