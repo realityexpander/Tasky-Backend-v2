@@ -66,6 +66,7 @@ class AgendaDataSourceMongo(
         }
     }
 
+    // Gets the full agenda for the user including other users' events that the user is attending
     override suspend fun getFullAgenda(userId: String): Agenda {
         return supervisorScope {
             val events = async {

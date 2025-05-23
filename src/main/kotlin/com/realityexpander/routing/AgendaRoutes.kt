@@ -115,7 +115,7 @@ fun Route.agenda() {
 		}
 	}
 
-	// Gets the full agenda for the given date
+	// Gets the full agenda for the user including other users' events that the user is attending
 	authenticate("jwt") {
 		get("fullAgenda") {
 			val agenda = agendaDataSource.getFullAgenda(call.userId)
